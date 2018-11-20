@@ -1,0 +1,28 @@
+{
+  "name": "jcstudio",
+  "version": "1.0.0",
+  "description": "Compose and record beats in your browser",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Justin Chung",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.0.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.13",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-transition-group": "^2.4.0",
+    "waaclock": "^0.5.3"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "nodemon": "^1.18.4"
+  }
+}

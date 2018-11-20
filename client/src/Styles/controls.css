@@ -1,0 +1,61 @@
+.controller {
+
+}
+
+.control_panel {
+    width: 100%;
+    text-align: center;
+}
+
+/* All */
+.controls {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    position: relative;
+    top: 0%;
+}
+
+.left {
+    float: left;
+    margin-left: 10px;
+}
+
+.right {
+    float: right;
+    margin-right: 10px;
+}
+
+.center {
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.control {
+    width: 100px;
+    vertical-align: top;
+    overflow: hidden;
+    display: inline-block;
+}
+.control:hover {
+    border-color: transparent transparent transparent #404040;
+}
+
+/* Play button */
+/*
+.control.play {
+      left: 15%;
+      border: 0;
+      background: transparent;
+      box-sizing: border-box;
+      width: 0;
+      height: 20px;
+      border-color: transparent transparent transparent #202020;
+      transition: 100ms all ease;
+      cursor: pointer;
+      border-style: solid;
+      border-width: 8px 0 8px 15px;
+}
+.control.play.active {
+      border-style: double;
+      border-width: 0px 0 0px 15px;
+}*/
