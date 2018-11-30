@@ -10,18 +10,24 @@ import '../Styles/controls.css';
 import '../Styles/looper.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// This class is a wrapper of all the components
+
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <AppNavbar />
-        <KeyBoard />
-        <Controls />
-        <Metronome />
-      </div>
-    );
-  }
+    constructor(props) {
+        super(props);
+        var audioContext = new window.AudioContext();
+        this.state = {
+            context: audioContext
+        };
+    }
+    render() {
+        return (
+            <div className="App">
+            <AppNavbar />
+            <KeyBoard context={this.state.context}/>
+            <Controls context={this.state.context}/>
+            </div>
+        );
+    }
 }
 
 export default App;
