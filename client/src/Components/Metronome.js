@@ -77,7 +77,7 @@ class Metronome extends React.Component {
         }
 
         this.setState({
-            quarterNote: this.state.quarterNote++
+            quarterNote: this.state.quarterNote + 1
         });
          if (this.state.quarterNote === 5) {
             this.setState({
@@ -123,10 +123,6 @@ class Metronome extends React.Component {
             console.log("sound off");
         }
     }
-
-
-
-
 }
 
 export default Metronome;
