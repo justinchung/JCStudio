@@ -1,6 +1,7 @@
 import React from 'react';
 import Looper from './Looper.js';
 import Metronome from './Metronome.js';
+import TempoControl from './TempoControl.js';
 
 class Controls extends React.Component {
 	constructor(props) {
@@ -28,8 +29,9 @@ class Controls extends React.Component {
                     </div>
                     <div className="controls right">
                         <Metronome context={this.props.context} on={this.metronomeOn}/>
-                        <button className="control bpm">BPM</button>
                     </div>
+                    <TempoControl />
+
                 </div>
 				<Looper active={this.state.isRecording} barCount={this.state.barCount}/>
 			</div>

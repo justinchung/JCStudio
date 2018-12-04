@@ -41,6 +41,7 @@ class Metronome extends React.Component {
     // Metronome
     scheduler() {
         while (this.state.nextNoteTime < this.state.context.currentTime + this.state.scheduleAheadTime) {
+            console.log(this.state.quarterNote);
             this.scheduleNote(this.state.quarterNote, this.state.nextNoteTime);
             this.nextNote();
         }
@@ -51,7 +52,7 @@ class Metronome extends React.Component {
 
         this.setState({
             nextNoteTime: this.state.nextNoteTime + secondsPerBeat,
-            quarterNote: this.state.quarterNote + 1
+            quarterNote: this.state.quarterNote++
         });
 
         if (this.state.quarterNote === 5) {
