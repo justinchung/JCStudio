@@ -1,30 +1,23 @@
 import React from 'react';
 
-class TempoControl extends React.Component {
+class BPMSlider extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            bpm: 120
-        };
+        this.onChange.bind(this);
     }
 
     render() {
         return (
-            <div>
-                <span class="range-slider__value">{this.state.sliderValue}</span>
-                <input className="range-slider__range" type="range" value={this.state.sliderValue} min="60" max="150" onChange={this.onChange.bind(this)} />
-            </div>
+
+                <input className="bpm-slider range" type="range" value={this.props.bpm} min="60" max="150" onChange={this.onChange.bind(this)} />
+
         );
     }
 
     onChange(e) {
-        console.log(e.target.value);
-        this.setState({
-            bpm: e.target.value
-        });
+        this.props.onChange(e.target.value);
     }
 
 }
 
-export default TempoControl;
+export default BPMSlider;

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import AppNavbar from './AppNavbar.js';
 import KeyBoard from './KeyBoard.js';
 import Controls from './Controls.js';
-import Metronome from './Metronome.js';
-import TempoControl from './TempoControl.js';
 
 import '../Styles/App.css';
 import '../Styles/keyboard.css';

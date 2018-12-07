@@ -8,6 +8,7 @@ class Looper extends React.Component {
 		this.state = {
 			bars: [[]],
 			current: 0,
+			active: true
 		};
 	}
 
@@ -39,14 +40,24 @@ class Looper extends React.Component {
 	}
 
 	render() {
-	    if (this.props.active) {
-
+	    if (this.state.active) {
+	        let duration = (60 / this.props.animateSpeed) * 16;
+	        const speed = {
+	            'animation-duration': `${duration}s`
+	        };
+            return (
+                <div className="looper">
+                    <div className="progress bg playing" style={speed}></div>
+                    <div className="progress line playing" ref="line" style={speed}></div>
+                    {this.renderBars()}
+                </div>
+            );
 	    }
 		const lineStyle = {
-			left: "0%",
+			left: "0%"
 		};
 		const bgStyle = {
-			width: "0%",
+			width: "0%"
 		};
 		return (
 			<div className="looper">
