@@ -8,13 +8,14 @@ class Looper extends React.Component {
 		this.state = {
 			bars: [[]],
 			current: 0,
-			active: true
+			active: this.props.active
 		};
 	}
 
 	createHit(left, keycode) {
 		var hitInfo = {
 			left: left,
+			current: null,
 			keycode: keycode,
 		};
 		return hitInfo;
@@ -40,10 +41,25 @@ class Looper extends React.Component {
 	}
 
 	render() {
+	/*
+	    const lineStyle = {
+            left: "0%"
+        };
+        const bgStyle = {
+            width: "0%"
+        };
+	    return (
+	        <div className="looper">
+                <div className="progress bg" style={bgStyle}></div>
+                <div className="progress line" ref="line" style={lineStyle}></div>
+                {this.renderBars()}
+            </div>
+	    );
+*/
 	    if (this.state.active) {
 	        let duration = (60 / this.props.animateSpeed) * 16;
 	        const speed = {
-	            'animation-duration': `${duration}s`
+	            animationDuration: `${duration}s`,
 	        };
             return (
                 <div className="looper">
@@ -53,19 +69,23 @@ class Looper extends React.Component {
                 </div>
             );
 	    }
-		const lineStyle = {
-			left: "0%"
-		};
-		const bgStyle = {
-			width: "0%"
-		};
-		return (
-			<div className="looper">
-				<div className="progress bg" style={bgStyle}></div>
-        		<div className="progress line" ref="line" style={lineStyle}></div>
-        		{this.renderBars()}
-        	</div>
-		);
+	    else {
+	        const lineStyle = {
+                left: "0%"
+            };
+            const bgStyle = {
+                width: "0%"
+            };
+
+            return (
+                <div className="looper">
+                    <div className="progress bg" style={bgStyle}></div>
+                    <div className="progress line" ref="line" style={lineStyle}></div>
+                    {this.renderBars()}
+                </div>
+            );
+	    }
+
 	}
 
 	componentDidUpdate(prevProps) {
@@ -79,6 +99,19 @@ class Looper extends React.Component {
             this.setState({current: this.props.barCount - 1});
 	    }
 	}
+
+	componentWillReceiveProps(nextProps) {
+	    if (nextProps.active !== this.state.active) {
+	        this.setState({
+                active: nextProps.active
+            });
+	    }
+	}
+
+    shouldComponentUpdate() {
+
+    }
+
 
 	componentWillMount() {
 		window.addEventListener("keydown", this.onKeyDown.bind(this));

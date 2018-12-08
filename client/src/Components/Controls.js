@@ -24,13 +24,12 @@ class Controls extends React.Component {
         this.state = {
             context: this.props.context,                // Audio Context
 
-            isPlaying: false,                            // Flag - line and metronome active
+            isPlaying: false,                           // Flag - line and metronome active
             isRecording: false,                         // Flag - ine, metronome, and recording active
-            metronome: true,                            // Flag - metronome produces sound
+            metronomeSound: true,                       // Flag - metronome produces sound
             bpm: 120,                                   // Tempo
             barCount: 1,                                // How many bars present
 
-            sound: true,
             nextNoteTime: 0.0,
             noteLength: 0.05,
             scheduleAheadTime: .1,
@@ -57,7 +56,7 @@ class Controls extends React.Component {
                         <BPMSlider onChange={ this.tempoOnChange }/>
                     </div>
                 </div>
-				<Looper active={this.state.isRecording} barCount={this.state.barCount} active={ this.state.isRecording || this.state.isPlaying } animateSpeed={ this.state.bpm }/>
+				<Looper active={this.state.isRecording} barCount={this.state.barCount} active={ this.state.isPlaying } animateSpeed={ this.state.bpm }/>
 			</div>
 		);
 	}
@@ -96,7 +95,7 @@ class Controls extends React.Component {
             osc.frequency.value = 880;
         }
 
-        if (this.state.sound) {
+        if (this.state.metronomeSound) {
             osc.start(time);
             osc.stop(time + this.state.noteLength);
         }
@@ -119,7 +118,6 @@ class Controls extends React.Component {
             this.setState({
                 quarterNote: 0,
                 nextNoteTime: this.state.context.currentTime,
-                isPlaying: true,
             });
             var intervalId = window.setInterval(this.scheduler, 25.0)
             this.setState({
@@ -131,7 +129,6 @@ class Controls extends React.Component {
             console.log('metronome stopped');
             this.setState({
                 unlocked: false,
-                isPlaying: false
             });
             window.clearInterval(this.state.intervalId);
         }
@@ -139,46 +136,41 @@ class Controls extends React.Component {
 
     // Callback from Metronome, toggle sound
     toggleMetronome() {
-        this.setState({ sound: !this.state.sound });
+        this.setState((prevState) => ({
+            metronomeSound: !prevState.metronomeSound
+        }));
     }
 
     // Toggle recording, calls togglePlay
     toggleRecord() {
+        this.setState((prevState) => ({
+            isRecording: !prevState.isRecording
+        }));
+        console.log(this.state.isRecording);
         this.togglePlay();
-        this.setState({ isRecording: !this.state.isRecording });
 	}
 
     // Toggle play, triggers CSS animation
 	togglePlay() {
+	    this.setState((prevState) => ({
+	        isPlaying: !prevState.isPlaying
+	    }));
 	    this.playMetronome();
-
-		var button = document.getElementsByClassName("control play")[0];
-		var controls = document.getElementsByClassName("progress");
-		if (this.state.isPlaying) {
-			for (let i = 0; i < controls.length; i++) {
-				controls[i].classList.add('playing');
-			}
-			button.classList.add('active');
-
-		}
-		else {
-			for (let i = 0; i < controls.length; i++) {
-				controls[i].classList.remove('playing');
-			}
-			button.classList.remove('active');
-
-		}
 	}
 
     // Add a bar to the bottom
 	addBar() {
-	    this.setState({ barCount: this.state.barCount + 1 });
+	    this.setState((prevState) => ({
+	        barCount: prevState.barCount + 1
+	    }));
 	}
 
     // Remove a bar from the bottom
 	removeBar() {
 	    if (this.state.barCount > 0) {
-	        this.setState({barCount: this.state.barCount - 1});
+	        this.setState((prevState) => ({
+	            barCount: prevState.barCount - 1
+	        }));
 	    }
 	}
 
