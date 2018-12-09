@@ -12,7 +12,6 @@ class Controls extends React.Component {
 		this.addBar = this.addBar.bind(this);
 		this.removeBar = this.removeBar.bind(this);
 
-        var audioContext = this.props.context;
         this.scheduler = this.scheduler.bind(this);
         this.playMetronome = this.playMetronome.bind(this);
 
@@ -35,11 +34,14 @@ class Controls extends React.Component {
             scheduleAheadTime: .1,
             quarterNote: 1,
 
-            unlocked: false
+            unlocked: false,
+
+            animateDuration: 8
         };
 	}
 
 	render() {
+	    const duration = (60 / this.state.bpm) * 16;
 		return (
 			<div className="controller">
 			    <div className="control_panel">
@@ -56,7 +58,8 @@ class Controls extends React.Component {
                         <BPMSlider onChange={ this.tempoOnChange }/>
                     </div>
                 </div>
-				<Looper active={this.state.isRecording} barCount={this.state.barCount} active={ this.state.isPlaying } animateSpeed={ this.state.bpm }/>
+				<Looper context={ this.props.context} barCount={this.state.barCount}
+				active={ this.state.isPlaying } animateDuration={ duration } isRecording={ this.state.isRecording}/>
 			</div>
 		);
 	}
@@ -127,10 +130,11 @@ class Controls extends React.Component {
         }
         else {
             console.log('metronome stopped');
+            window.clearInterval(this.state.intervalId);
             this.setState({
                 unlocked: false,
+                intervalId: null
             });
-            window.clearInterval(this.state.intervalId);
         }
     }
 
@@ -176,8 +180,17 @@ class Controls extends React.Component {
 
     // Callback from BPMSlider, change the tempo of the Metronome
 	tempoOnChange(bpm) {
-	    this.setState({ bpm: bpm });
-	    console.log(this.state.bpm);
+	    this.setState({
+	        bpm: bpm,
+	        isPlaying: false,
+	        isRecording: false
+	    });
+	    if (this.state.intervalId) {
+	        window.clearInterval(this.state.intervalId);
+	        this.setState({
+	            intervalId: null
+	        });
+	    }
 	}
 
 	componentDidMount() {
@@ -185,7 +198,7 @@ class Controls extends React.Component {
 	}
 
 	componentWillUnmount() {
-	    //window.removeEventListener("keydown", this.onKeyDown);
+        //window.removeEventListener("keydown", this.onKeyDown);
 	}
 
     onKeyDown() {

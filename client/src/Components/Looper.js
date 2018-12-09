@@ -8,7 +8,7 @@ class Looper extends React.Component {
 		this.state = {
 			bars: [[]],
 			current: 0,
-			active: this.props.active
+			active: this.props.active,
 		};
 	}
 
@@ -22,10 +22,10 @@ class Looper extends React.Component {
 	}
 
 	addHit(left, keycode) {
-		let hit = this.createHit(left, keycode);
-		var temp = this.state.bars;
-		temp[this.state.current].push(hit);
-		this.setState({bars: temp});
+		let hit = this.createHit(left, keycode);            // Data fields of hit
+		var temp = this.state.bars;                         // Copy original set of hits
+		temp[this.state.current].push(hit);                 // Push new hit
+		this.setState({bars: temp});                        // Update set
 	}
 
     selectBar(barId) {
@@ -57,9 +57,8 @@ class Looper extends React.Component {
 	    );
 */
 	    if (this.state.active) {
-	        let duration = (60 / this.props.animateSpeed) * 16;
 	        const speed = {
-	            animationDuration: `${duration}s`,
+	            animationDuration: `${this.props.animateDuration}s`,
 	        };
             return (
                 <div className="looper">
@@ -88,7 +87,7 @@ class Looper extends React.Component {
 
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps, prevState) {
 	    if (this.props.barCount !== prevProps.barCount) {
             if (this.props.barCount > prevProps.barCount) {
                 this.state.bars.push([]);
@@ -107,10 +106,15 @@ class Looper extends React.Component {
             });
 	    }
 	}
-
-    shouldComponentUpdate() {
-
+/*
+    shouldComponentUpdate(prevProps, prevState) {
+        if (this.props.barCount !== prevProps.barCount || this.props.animateDuration !== prevProps.animateDuration
+        || this.state.active !== prevState.active) {
+            return true;
+        }
+        return false;
     }
+*/
 
 
 	componentWillMount() {
@@ -124,7 +128,7 @@ class Looper extends React.Component {
 	onKeyDown(e) {
 		const key = document.querySelector(`[data-keycode="${e.keyCode}"]`);
 
-		if (this.props.active && key && key.getAttribute("data-show") === "true") {
+		if (this.props.isRecording && key && key.getAttribute("data-show") === "true") {
 			const keyValue = key.getAttribute("data-key");
 			let left = window.getComputedStyle(ReactDOM.findDOMNode(this.refs.line)).getPropertyValue("left");
 			this.addHit(left, keyValue);
