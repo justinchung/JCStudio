@@ -36,7 +36,7 @@ class Controls extends React.Component {
 
             unlocked: false,
 
-            animateDuration: 8
+            animateDuration: 8                          // Initially set it to 8, matches default 120 BPM
         };
 	}
 
@@ -194,24 +194,30 @@ class Controls extends React.Component {
 	}
 
 	componentDidMount() {
-	    //window.addEventListener("keydown", this.onKeyDown);
+	    window.addEventListener("keydown", this.onKeyDown);
 	}
 
 	componentWillUnmount() {
-        //window.removeEventListener("keydown", this.onKeyDown);
+        window.removeEventListener("keydown", this.onKeyDown);
 	}
 
     onKeyDown() {
-        var loop = () => {
-            var osc = this.state.context.createOscillator();
-            osc.connect(this.state.context.destination);
-            osc.frequency.value = 750;
-            var time = this.state.context.currentTime + this.state.scheduleAheadTime
-            osc.start(time);
-            osc.stop(time + this.state.noteLength);
+        if (this.state.isRecording) {
+            var loop = () => {
+                var osc = this.state.context.createOscillator();
+                osc.connect(this.state.context.destination);
+                osc.frequency.value = 200;
+                var time = this.state.context.currentTime + this.state.scheduleAheadTime;
+                if (this.state.isPlaying) {
+                    osc.start(time);
+                    osc.stop(time + 0.2);
+                }
+            }
+
+            const interval = ((60 / this.state.bpm) * 16) * 1000;
+            window.setInterval(loop, interval);
         }
 
-        window.setInterval(loop, 5000);
     }
 }
 

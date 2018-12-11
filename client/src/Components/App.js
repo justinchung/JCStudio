@@ -4,10 +4,10 @@ import KeyBoard from './KeyBoard.js';
 import Controls from './Controls.js';
 
 import '../Styles/App.css';
-import '../Styles/keyboard.css';
-import '../Styles/controls.css';
-import '../Styles/looper.css';
-import '../Styles/tempo.css';
+import '../Styles/Keyboard.css';
+import '../Styles/Controls.css';
+import '../Styles/Looper.css';
+import '../Styles/Tempo.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -24,8 +24,10 @@ class App extends Component {
         return (
             <div className="App">
                 <AppNavbar />
-                <KeyBoard context={this.state.context} />
-                <Controls context={this.state.context} />
+                <React.StrictMode>
+                    <KeyBoard context={this.state.context} />
+                    <Controls context={this.state.context} />
+                </React.StrictMode>
             </div>
         );
     }

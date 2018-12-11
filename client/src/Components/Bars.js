@@ -1,16 +1,5 @@
-import React from "react";
-
-class Hit extends React.Component {
-	render() {
-		const hitStyle = {
-			left: `${this.props.left}%`,
-		};
-		const {left, keycode} = this.props;
-		return (
-			<div className="hit" style={{left: left}}>{this.props.keycode}</div>
-		);
-	}
-}
+import React from 'react';
+import Hit from './Hit.js';
 
 class Bar extends React.Component {
 	render() {
@@ -37,3 +26,8 @@ class Bar extends React.Component {
 }
 
 export default Bar;
+
+// TODO: IMPLEMENT A SEQUENCER
+// IDEA #1 Drum Machine: use a variable to keep track of the current note: currentNote
+//      - This kind of limits the different types of timing the user can do
+//      - Can allow user to have better precision on how they want to time sounds

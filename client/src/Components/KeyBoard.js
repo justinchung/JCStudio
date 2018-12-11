@@ -7,6 +7,7 @@ class KeyBoard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+		    context: this.props.context,
 			mode: "Default",
 			fired_keys: {},
 			alert: true,
@@ -64,6 +65,7 @@ class KeyBoard extends React.Component {
 
     // When a key is pressed, add 'playing' to individual key's class list to trigger animation
   	onKeyDown(e) {
+  	    this.playSound();
     	const keyCode = e.keyCode;
    		const key = document.querySelector(`[data-keycode="${keyCode}"]`);
 
@@ -118,6 +120,18 @@ class KeyBoard extends React.Component {
       			this.setState({alert: false});
       		}
     	}
+  	}
+
+  	playSound() {
+
+  	    console.log('play sound');
+  	    var osc = this.state.context.createOscillator();
+  	    osc.connect(this.state.context.destination);
+  	    osc.frequency.value = 200;
+  	    var time = this.state.context.currentTime;
+  	    osc.start(time);
+  	    osc.stop(time + 0.2);
+
   	}
 }
 

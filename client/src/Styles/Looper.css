@@ -46,18 +46,3 @@
 	0% {width: 0%;}
 	100% {width: 100%;}
 }
-
-/* Bars */
-.bar-wrapper {
-	bottom: 100%;
-}
-.bar {
-	width: 100%;
-	height: 50px;
-	border-bottom: 1px solid black;
-}
-
-/* Hits */
-.hit {
-	position: absolute;
-}

@@ -6,10 +6,13 @@ class Looper extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+		    context: this.props.context,
 			bars: [[]],
 			current: 0,
 			active: this.props.active,
 		};
+
+        this.line = React.createRef();
 	}
 
 	createHit(left, keycode) {
@@ -30,6 +33,7 @@ class Looper extends React.Component {
 
     selectBar(barId) {
         this.setState({current: barId});
+
     }
 
 	renderBars() {
@@ -41,21 +45,6 @@ class Looper extends React.Component {
 	}
 
 	render() {
-	/*
-	    const lineStyle = {
-            left: "0%"
-        };
-        const bgStyle = {
-            width: "0%"
-        };
-	    return (
-	        <div className="looper">
-                <div className="progress bg" style={bgStyle}></div>
-                <div className="progress line" ref="line" style={lineStyle}></div>
-                {this.renderBars()}
-            </div>
-	    );
-*/
 	    if (this.state.active) {
 	        const speed = {
 	            animationDuration: `${this.props.animateDuration}s`,
@@ -63,7 +52,7 @@ class Looper extends React.Component {
             return (
                 <div className="looper">
                     <div className="progress bg playing" style={speed}></div>
-                    <div className="progress line playing" ref="line" style={speed}></div>
+                    <div className="progress line playing" ref={this.line} style={speed}></div>
                     {this.renderBars()}
                 </div>
             );
@@ -79,7 +68,7 @@ class Looper extends React.Component {
             return (
                 <div className="looper">
                     <div className="progress bg" style={bgStyle}></div>
-                    <div className="progress line" ref="line" style={lineStyle}></div>
+                    <div className="progress line" ref={this.line} style={lineStyle}></div>
                     {this.renderBars()}
                 </div>
             );
@@ -106,18 +95,8 @@ class Looper extends React.Component {
             });
 	    }
 	}
-/*
-    shouldComponentUpdate(prevProps, prevState) {
-        if (this.props.barCount !== prevProps.barCount || this.props.animateDuration !== prevProps.animateDuration
-        || this.state.active !== prevState.active) {
-            return true;
-        }
-        return false;
-    }
-*/
 
-
-	componentWillMount() {
+	componentDidMount() {
 		window.addEventListener("keydown", this.onKeyDown.bind(this));
 	}
 
@@ -130,7 +109,8 @@ class Looper extends React.Component {
 
 		if (this.props.isRecording && key && key.getAttribute("data-show") === "true") {
 			const keyValue = key.getAttribute("data-key");
-			let left = window.getComputedStyle(ReactDOM.findDOMNode(this.refs.line)).getPropertyValue("left");
+			let left = window.getComputedStyle(ReactDOM.findDOMNode(this.line.current)).getPropertyValue("left");
+			console.log(left);
 			this.addHit(left, keyValue);
 		}
 	}

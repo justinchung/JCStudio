@@ -3,7 +3,6 @@ import React from 'react';
 class Metronome extends React.Component {
     constructor(props) {
         super(props);
-
         this.toggle = this.toggle.bind(this);
     }
 
@@ -12,7 +11,6 @@ class Metronome extends React.Component {
             <button className="control metronome" onClick={this.toggle}>Metronome</button>
         );
     }
-
 
     toggle() {
         this.props.toggleMetronome();
