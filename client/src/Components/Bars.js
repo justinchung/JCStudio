@@ -2,9 +2,15 @@ import React from 'react';
 import Hit from './Hit.js';
 
 class Bar extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.onClickBar = this.onClickBar.bind(this);
+    }
+
 	render() {
 		return (
-			<div className="bar" onChange={this.finishRecording} onClick={this.onClickBar.bind(this)}>
+			<div className="bar" data-id={this.props.barId} onChange={this.finishRecording} onClick={this.onClickBar}>
                 {this.renderHits()}
 			</div>
 		);
@@ -18,11 +24,18 @@ class Bar extends React.Component {
 		var hits = [];
 		if (this.props.hits != null) {
 		    for (var i = 0; i < this.props.hits.length; i++) {
-                hits.push(<Hit key={i} barId={i} left={this.props.hits[i].left} keycode={this.props.hits[i].keycode}/>);
+                hits.push(<Hit key={i} dataId={i} left={this.props.hits[i].left} keycode={this.props.hits[i].keycode} />);
             }
 		}
 		return hits;
 	}
+
+	onMouseMove(e) {
+
+	}
+
+
+
 }
 
 export default Bar;

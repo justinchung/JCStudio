@@ -5,6 +5,8 @@ import Bar from './Bars.js';
 class Looper extends React.Component {
 	constructor(props) {
 		super(props);
+		this.selectBar = this.selectBar.bind(this);
+
 		this.state = {
 		    context: this.props.context,
 			bars: [[]],
@@ -33,13 +35,12 @@ class Looper extends React.Component {
 
     selectBar(barId) {
         this.setState({current: barId});
-
     }
 
 	renderBars() {
 		let bars = [];
 		for (let i = 0; i < this.props.barCount; i++) {
-		    bars.push(<Bar key={i} barId={i} hits={this.state.bars[i]} selectBar={this.selectBar.bind(this)}/>);
+		    bars.push(<Bar key={i} barId={i} hits={this.state.bars[i]} selectBar={this.selectBar}/>);
 		}
 		return bars;
 	}
@@ -110,7 +111,6 @@ class Looper extends React.Component {
 		if (this.props.isRecording && key && key.getAttribute("data-show") === "true") {
 			const keyValue = key.getAttribute("data-key");
 			let left = window.getComputedStyle(ReactDOM.findDOMNode(this.line.current)).getPropertyValue("left");
-			console.log(left);
 			this.addHit(left, keyValue);
 		}
 	}

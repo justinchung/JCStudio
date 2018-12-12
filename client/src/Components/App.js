@@ -7,6 +7,8 @@ import '../Styles/App.css';
 import '../Styles/Keyboard.css';
 import '../Styles/Controls.css';
 import '../Styles/Looper.css';
+import '../Styles/Bar.css';
+import '../Styles/Hit.css';
 import '../Styles/Tempo.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

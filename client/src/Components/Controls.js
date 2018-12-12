@@ -217,7 +217,6 @@ class Controls extends React.Component {
             const interval = ((60 / this.state.bpm) * 16) * 1000;
             window.setInterval(loop, interval);
         }
-
     }
 }
 
