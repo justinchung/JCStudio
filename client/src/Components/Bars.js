@@ -30,8 +30,13 @@ class Bar extends React.Component {
 		return hits;
 	}
 
-	onMouseMove(e) {
+	onMouseDown(e) {
+	    e.preventDefault();
+        console.log(e.target);
+	}
 
+	componentDidUpdate() {
+	    //window.addEventListener('mousedown', this.onMouseDown.bind(this));
 	}
 
 

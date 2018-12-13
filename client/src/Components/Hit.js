@@ -9,7 +9,8 @@ class Hit extends React.Component {
         this.onMouseMove = this.onMouseMove.bind(this);
 
         this.state = {
-            dragging: false
+            dragging: false,
+            x: this.props.left
         };
     }
 
@@ -19,38 +20,32 @@ class Hit extends React.Component {
 		};
 		const {left, keycode} = this.props;
 		return (
-			<div className="hit" style={{left: this.props.left}} data-id={this.props.dataId}
-			onMouseDown={ this.onMouseDown } onMouseUp={ this.onMouseUp } onMouseMove={ this.onMouseMove }
-			>
+			<div className="hit" style={{left: this.state.x}} data-id={this.props.dataId} onMouseDown={ this.onMouseDown }>
 			    {this.props.keycode}
 			</div>
 		);
 	}
 
     onMouseDown(e) {
-        console.log('mouse down');
+        e.stopPropagation();
+        e.preventDefault();
         if (e.button !== 0) return;
         console.log(e.pageX, e.pageY);
         this.setState({
-            x: e.pageX,
             dragging: true
-        })
-
-        e.stopPropagation();
-        e.preventDefault();
+        });
     }
 
     onMouseUp(e) {
-        console.log('mouse up');
+        e.stopPropagation();
+        e.preventDefault();
         this.setState({
             dragging: false
         });
-        e.stopPropagation();
-        e.preventDefault();
+
     }
 
     onMouseMove(e) {
-        console.log('mouse move');
         if (!this.state.dragging) return;
         this.setState({
             x: e.pageX
@@ -58,16 +53,14 @@ class Hit extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener('onMouseUp', this.onMouseUp);
-        window.addEventListener('onMouseMove', this.onMouseMove);
+        window.addEventListener('mouseup', this.onMouseUp);
+        window.addEventListener('mousemove', this.onMouseMove);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('onMouseUp', this.onMouseUp);
-        window.removeEventListener('onMouseMove', this.onMouseMove);
+        window.removeEventListener('mouseup', this.onMouseUp);
+        window.removeEventListener('mousemove', this.onMouseMove);
     }
-
-
 }
 
 export default Hit;
