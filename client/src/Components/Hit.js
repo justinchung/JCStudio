@@ -30,7 +30,6 @@ class Hit extends React.Component {
         e.stopPropagation();
         e.preventDefault();
         if (e.button !== 0) return;
-        console.log(e.pageX, e.pageY);
         this.setState({
             dragging: true
         });
@@ -46,6 +45,8 @@ class Hit extends React.Component {
     }
 
     onMouseMove(e) {
+        e.stopPropagation();
+        e.preventDefault();
         if (!this.state.dragging) return;
         this.setState({
             x: e.pageX

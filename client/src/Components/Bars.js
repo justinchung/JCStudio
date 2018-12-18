@@ -35,9 +35,7 @@ class Bar extends React.Component {
         console.log(e.target);
 	}
 
-	componentDidUpdate() {
-	    //window.addEventListener('mousedown', this.onMouseDown.bind(this));
-	}
+
 
 
 

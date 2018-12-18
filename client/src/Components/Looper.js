@@ -12,6 +12,7 @@ class Looper extends React.Component {
 			bars: [[]],
 			current: 0,
 			active: this.props.active,
+			intervals: []
 		};
 
         this.line = React.createRef();
@@ -90,6 +91,15 @@ class Looper extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+	    //console.log(this.state.intervals);
+	    if (nextProps.active === false) {
+	        for (var i = 0; i < this.state.intervals.length; i++) {
+	            window.clearInterval(this.state.intervals[i]);
+	        }
+	        this.setState({
+	            intervals: []
+	        })
+	    }
 	    if (nextProps.active !== this.state.active) {
 	        this.setState({
                 active: nextProps.active
@@ -108,11 +118,37 @@ class Looper extends React.Component {
 	onKeyDown(e) {
 		const key = document.querySelector(`[data-keycode="${e.keyCode}"]`);
 
+		if (this.props.isRecording) {
+            var loop = () => {
+                var osc = this.state.context.createOscillator();
+                osc.connect(this.state.context.destination);
+                osc.frequency.value = 200;
+                var time = this.state.context.currentTime + .1;
+                console.log(time);
+                if (this.state.active) {
+                    osc.start(time);
+                    osc.stop(time + 0.2);
+                }
+            }
+
+            const interval = ((60 / this.props.bpm) * 16) * 1000;
+            var id = window.setInterval(loop, interval)
+            let temp = this.state.intervals;
+            temp.push(id);
+            this.setState({
+                intervals: temp
+            })
+        }
+
 		if (this.props.isRecording && key && key.getAttribute("data-show") === "true") {
 			const keyValue = key.getAttribute("data-key");
 			let left = window.getComputedStyle(ReactDOM.findDOMNode(this.line.current)).getPropertyValue("left");
 			this.addHit(left, keyValue);
 		}
+	}
+
+	scheduleExistingHits() {
+
 	}
 }
 

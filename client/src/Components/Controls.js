@@ -58,7 +58,7 @@ class Controls extends React.Component {
                         <BPMSlider onChange={ this.tempoOnChange }/>
                     </div>
                 </div>
-				<Looper context={ this.props.context} barCount={this.state.barCount}
+				<Looper context={ this.props.context} barCount={this.state.barCount} bpm={ this.state.bpm }
 				active={ this.state.isPlaying } animateDuration={ duration } isRecording={ this.state.isRecording}/>
 			</div>
 		);
@@ -101,6 +101,7 @@ class Controls extends React.Component {
         if (this.state.metronomeSound) {
             osc.start(time);
             osc.stop(time + this.state.noteLength);
+            //console.log('note');
         }
     }
 
@@ -117,7 +118,6 @@ class Controls extends React.Component {
 
         // setInterval repeatedly calls the scheduler which simulates an overlap for precision
         if (!this.state.isPlaying) {
-            console.log('metronome playing');
             this.setState({
                 quarterNote: 0,
                 nextNoteTime: this.state.context.currentTime,
@@ -129,7 +129,6 @@ class Controls extends React.Component {
 
         }
         else {
-            console.log('metronome stopped');
             window.clearInterval(this.state.intervalId);
             this.setState({
                 unlocked: false,
@@ -150,7 +149,6 @@ class Controls extends React.Component {
         this.setState((prevState) => ({
             isRecording: !prevState.isRecording
         }));
-        console.log(this.state.isRecording);
         this.togglePlay();
 	}
 
@@ -194,11 +192,11 @@ class Controls extends React.Component {
 	}
 
 	componentDidMount() {
-	    window.addEventListener("keydown", this.onKeyDown);
+	    //window.addEventListener("keydown", this.onKeyDown);
 	}
 
 	componentWillUnmount() {
-        window.removeEventListener("keydown", this.onKeyDown);
+        //window.removeEventListener("keydown", this.onKeyDown);
 	}
 
     onKeyDown() {
