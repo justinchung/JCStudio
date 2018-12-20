@@ -124,7 +124,6 @@ class Looper extends React.Component {
                 osc.connect(this.state.context.destination);
                 osc.frequency.value = 200;
                 var time = this.state.context.currentTime + .1;
-                console.log(time);
                 if (this.state.active) {
                     osc.start(time);
                     osc.stop(time + 0.2);
@@ -145,10 +144,6 @@ class Looper extends React.Component {
 			let left = window.getComputedStyle(ReactDOM.findDOMNode(this.line.current)).getPropertyValue("left");
 			this.addHit(left, keyValue);
 		}
-	}
-
-	scheduleExistingHits() {
-
 	}
 }
 

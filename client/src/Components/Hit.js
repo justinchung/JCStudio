@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class Hit extends React.Component {
     constructor(props) {
@@ -16,14 +15,17 @@ class Hit extends React.Component {
 
 	render() {
 		const hitStyle = {
-			left: `${this.props.left}%`,
+		    left: `${this.round(this.state.x)}%`
 		};
-		const {left, keycode} = this.props;
 		return (
-			<div className="hit" style={{left: this.state.x}} data-id={this.props.dataId} onMouseDown={ this.onMouseDown }>
-			    {this.props.keycode}
+			<div className="hit" style={hitStyle} data-id={this.props.dataId} onMouseDown={ this.onMouseDown }>
+                {this.props.keycode}
 			</div>
 		);
+	}
+
+	round(x) {
+	    return (Math.ceil(((parseFloat(x) / window.innerWidth) * 100) * 1.28) / 1.28 ) - 0.78125;
 	}
 
     onMouseDown(e) {
@@ -61,6 +63,13 @@ class Hit extends React.Component {
     componentWillUnmount() {
         window.removeEventListener('mouseup', this.onMouseUp);
         window.removeEventListener('mousemove', this.onMouseMove);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.dragging !== nextState.dragging || this.state.x !== nextState.x) {
+            return true;
+        }
+        return false;
     }
 }
 

@@ -5,6 +5,10 @@ class Bar extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            active: true
+        };
+
         this.onClickBar = this.onClickBar.bind(this);
     }
 
@@ -34,11 +38,6 @@ class Bar extends React.Component {
 	    e.preventDefault();
         console.log(e.target);
 	}
-
-
-
-
-
 }
 
 export default Bar;
