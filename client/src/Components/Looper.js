@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Bar from './Bars.js';
 
+import { Kick } from '../Engines/Kick.js';
+
+
 class Looper extends React.Component {
 	constructor(props) {
 		super(props);
@@ -18,11 +21,16 @@ class Looper extends React.Component {
         this.line = React.createRef();
 	}
 
+	round(x) {
+        return (Math.ceil(((parseFloat(x) / window.innerWidth) * 100) * 1.28) / 1.28 ) - 0.78125;
+    }
+
 	createHit(left, keycode) {
 		var hitInfo = {
+			//left: this.round(left),
 			left: left,
-			current: null,
 			keycode: keycode,
+			//index: this.round(left) * 1.28
 		};
 		return hitInfo;
 	}
@@ -30,7 +38,9 @@ class Looper extends React.Component {
 	addHit(left, keycode) {
 		let hit = this.createHit(left, keycode);            // Data fields of hit
 		var temp = this.state.bars;                         // Copy original set of hits
+		console.log(temp);
 		temp[this.state.current].push(hit);                 // Push new hit
+		//temp[this.state.current][hit.index]
 		this.setState({bars: temp});                        // Update set
 	}
 
@@ -91,7 +101,6 @@ class Looper extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-	    //console.log(this.state.intervals);
 	    if (nextProps.active === false) {
 	        for (var i = 0; i < this.state.intervals.length; i++) {
 	            window.clearInterval(this.state.intervals[i]);
@@ -130,8 +139,14 @@ class Looper extends React.Component {
                 }
             }
 
+            var loop1 = () => {
+                console.log("hi");
+                var kick = new Kick(this.state.context);
+                kick.trigger(this.state.context.currentTime);
+            }
+
             const interval = ((60 / this.props.bpm) * 16) * 1000;
-            var id = window.setInterval(loop, interval)
+            var id = window.setInterval(loop1, interval)
             let temp = this.state.intervals;
             temp.push(id);
             this.setState({

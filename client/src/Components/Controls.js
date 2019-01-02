@@ -18,8 +18,6 @@ class Controls extends React.Component {
         this.tempoOnChange = this.tempoOnChange.bind(this);
         this.toggleMetronome = this.toggleMetronome.bind(this);
 
-        this.onKeyDown = this.onKeyDown.bind(this);
-
         this.state = {
             context: this.props.context,                // Audio Context
 
@@ -190,32 +188,6 @@ class Controls extends React.Component {
 	        });
 	    }
 	}
-
-	componentDidMount() {
-	    //window.addEventListener("keydown", this.onKeyDown);
-	}
-
-	componentWillUnmount() {
-        //window.removeEventListener("keydown", this.onKeyDown);
-	}
-
-    onKeyDown() {
-        if (this.state.isRecording) {
-            var loop = () => {
-                var osc = this.state.context.createOscillator();
-                osc.connect(this.state.context.destination);
-                osc.frequency.value = 200;
-                var time = this.state.context.currentTime + this.state.scheduleAheadTime;
-                if (this.state.isPlaying) {
-                    osc.start(time);
-                    osc.stop(time + 0.2);
-                }
-            }
-
-            const interval = ((60 / this.state.bpm) * 16) * 1000;
-            window.setInterval(loop, interval);
-        }
-    }
 }
 
 export default Controls;

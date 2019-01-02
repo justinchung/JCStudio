@@ -1,6 +1,9 @@
 import React from 'react';
 import ModeSelector from './ModeSelector.js';
-import {Default, Piano} from './Modes.js';
+import { Default, Piano } from './Modes.js';
+
+import { Snare } from '../Engines/Snare.js';
+import { HiHat } from '../Engines/HiHat.js';
 
 // This class holds the keyboard and the mode selector (determines the type of keyboard to display)
 class KeyBoard extends React.Component {
@@ -124,12 +127,20 @@ class KeyBoard extends React.Component {
   	}
 
   	playSound() {
+  	    /*
   	    var osc = this.state.context.createOscillator();
   	    osc.connect(this.state.context.destination);
   	    osc.frequency.value = 200;
   	    var time = this.state.context.currentTime;
   	    osc.start(time);
   	    osc.stop(time + 0.2);
+  	    */
+
+  	    //var snare = new Snare(this.state.context);
+  	    //snare.trigger(this.state.context.currentTime);
+
+  	    var hihat = new HiHat(this.state.context);
+  	    hihat.trigger(this.state.context.currentTime);
   	}
 }
 

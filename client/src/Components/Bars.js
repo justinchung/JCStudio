@@ -6,7 +6,9 @@ class Bar extends React.Component {
         super(props);
 
         this.state = {
-            active: true
+            active: true,
+            hits: this.props.hits
+
         };
 
         this.onClickBar = this.onClickBar.bind(this);
@@ -35,9 +37,9 @@ class Bar extends React.Component {
 	}
 
 	onMouseDown(e) {
-	    e.preventDefault();
+        e.preventDefault();
         console.log(e.target);
-	}
+    }
 }
 
 export default Bar;
