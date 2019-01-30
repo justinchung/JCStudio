@@ -4,11 +4,11 @@ import React from 'react';
 
 // This function renders individual keys, should be called for each key on an actual keyboard
 function renderKey(label, keyname, keycode, show) {
-    return (
-        <div className="key" data-key={keyname} data-keycode={keycode} data-show={show}>
-            {label}
-        </div>
-    );
+  return (
+    <div className="key" data-key={keyname} data-keycode={keycode} data-show={show}>
+      {label}
+    </div>
+  );
 }
 
 // Default keyboard where every key is available

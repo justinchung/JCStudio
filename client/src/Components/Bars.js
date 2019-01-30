@@ -2,44 +2,37 @@ import React from 'react';
 import Hit from './Hit.js';
 
 class Bar extends React.Component {
-    constructor(props) {
-        super(props);
+  state = {
+    active: true,
+    hits: this.props.hits
+  };
 
-        this.state = {
-            active: true,
-            hits: this.props.hits
+  render() {
+    return (
+      <div className="bar" data-id={this.props.barId} onChange={this.finishRecording} onClick={this.onClickBar}>
+        {this.renderHits()}
+      </div>
+    );
+  }
 
-        };
+  onClickBar() {
+    this.props.selectBar(this.props.barId);
+  }
 
-        this.onClickBar = this.onClickBar.bind(this);
+  renderHits() {
+    var hits = [];
+    if (this.props.hits != null) {
+      for (var i = 0; i < this.props.hits.length; i++) {
+        hits.push(<Hit key={i} dataId={i} left={this.props.hits[i].left} keycode={this.props.hits[i].keycode} />);
+      }
     }
+    return hits;
+  }
 
-	render() {
-		return (
-			<div className="bar" data-id={this.props.barId} onChange={this.finishRecording} onClick={this.onClickBar}>
-                {this.renderHits()}
-			</div>
-		);
-	}
-
-	onClickBar() {
-	    this.props.selectBar(this.props.barId);
-	}
-
-	renderHits() {
-		var hits = [];
-		if (this.props.hits != null) {
-		    for (var i = 0; i < this.props.hits.length; i++) {
-                hits.push(<Hit key={i} dataId={i} left={this.props.hits[i].left} keycode={this.props.hits[i].keycode} />);
-            }
-		}
-		return hits;
-	}
-
-	onMouseDown(e) {
-        e.preventDefault();
-        console.log(e.target);
-    }
+  onMouseDown = (e) => {
+    e.preventDefault();
+    console.log(e.target);
+  }
 }
 
 export default Bar;

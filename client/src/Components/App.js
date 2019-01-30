@@ -14,25 +14,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        var audioContext = new window.AudioContext();
-        this.state = {
-            context: audioContext
-        };
-    }
+  var audioContext = new window.AudioContext();
+  state = {
+    context: audioContext
+  };
 
-    render() {
-        return (
-            <div className="App">
-                <AppNavbar />
-                <React.StrictMode>
-                    <KeyBoard context={this.state.context} />
-                    <Controls context={this.state.context} />
-                </React.StrictMode>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="App">
+        <AppNavbar />
+        <React.StrictMode>
+          <KeyBoard context={this.state.context} />
+          <Controls context={this.state.context} />
+        </React.StrictMode>
+      </div>
+    );
+  }
 }
 
 export default App;
