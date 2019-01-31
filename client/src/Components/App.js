@@ -14,9 +14,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 class App extends Component {
-  var audioContext = new window.AudioContext();
+  audioContext = new window.AudioContext();
   state = {
-    context: audioContext
+    context: this.audioContext
   };
 
   render() {

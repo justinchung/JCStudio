@@ -59,7 +59,7 @@ class Looper extends React.Component {
       return (
         <div className="looper">
           <div className="progress bg playing" style={speed}></div>
-            <div className="progress line playing" ref={this.line} style={speed}></div>
+          <div className="progress line playing" ref={this.line} style={speed}></div>
           {this.renderBars()}
         </div>
       );
@@ -78,7 +78,7 @@ class Looper extends React.Component {
           <div className="progress line" ref={this.line} style={lineStyle}></div>
           {this.renderBars()}
         </div>
-      ;
+      );
     }
   }
 
@@ -111,11 +111,11 @@ class Looper extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("keydown");
+    window.addEventListener("keydown", this.keydown);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown");
+    window.removeEventListener("keydown", this.keydown);
   }
 
   onKeyDown = (e) => {

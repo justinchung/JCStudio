@@ -14,7 +14,7 @@ import {
 } from 'reactstrap';
 
 class AppNavbar extends React.Component {
-  this.state = {
+  state = {
       isOpen: false
   };
 

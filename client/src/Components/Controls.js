@@ -159,7 +159,7 @@ class Controls extends React.Component {
 	}
 
   // Callback from BPMSlider, change the tempo of the Metronome
-	tempoOnChang = (bpm) => {
+	tempoOnChange = (bpm) => {
     this.setState({
       bpm: bpm,
       isPlaying: false,
