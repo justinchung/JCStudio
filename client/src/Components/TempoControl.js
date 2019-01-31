@@ -1,21 +1,16 @@
 import React from 'react';
 
 class BPMSlider extends React.Component {
-    constructor(props) {
-        super(props);
-        this.onChange.bind(this);
-    }
+  render() {
+    return (
+      <input className="bpm-slider range" type="range" value={this.props.bpm}
+      min="60" max="150" onChange={this.onChange.bind(this)} />
+    );
+  }
 
-    render() {
-        return (
-            <input className="bpm-slider range" type="range" value={this.props.bpm}
-            min="60" max="150" onChange={this.onChange.bind(this)} />
-        );
-    }
-
-    onChange(e) {
-        this.props.onChange(e.target.value);
-    }
+  onChange = (e) => {
+    this.props.onChange(e.target.value);
+  }
 }
 
 export default BPMSlider;
