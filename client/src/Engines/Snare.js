@@ -45,7 +45,7 @@ export class Snare {
   }
 
   trigger(time) {
-    if (this.volume == 0) { return };
+    if (this.volume === 0) { return };
     this.setup();
     this.noiseEnvelope.gain.setValueAtTime(this.volume, time);
     this.noiseEnvelope.gain.exponentialRampToValueAtTime(0.01, time + this.decay);

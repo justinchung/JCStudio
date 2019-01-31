@@ -142,7 +142,7 @@ class Controls extends React.Component {
     this.playMetronome();
 	}
 
-    // Add a bar to the bottom
+  // Add a bar to the bottom
 	addBar = () => {
     this.setState((prevState) => ({
       barCount: prevState.barCount + 1

@@ -7,18 +7,15 @@ import { HiHat } from '../Engines/HiHat.js';
 
 // This class holds the keyboard and the mode selector (determines the type of keyboard to display)
 class KeyBoard extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-		  context: this.props.context,
-			mode: "Default",
-			fired_keys: {},
-			alert: true,
-		};
-	}
+	state = {
+	  context: this.props.context,
+		mode: "Default",
+		fired_keys: {},
+		alert: true,
+	};
 
-    // Set the mode of keyboard, passed to child component ModeSelector
-  onSelectMode(selectedMode) {
+  // Set the mode of keyboard, passed to child component ModeSelector
+  onSelectMode = (selectedMode) => {
     this.setState({mode: selectedMode});
   }
 

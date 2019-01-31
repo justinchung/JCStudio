@@ -29,7 +29,7 @@ export class HiHat {
 
   trigger(time) {
     console.log('asd');
-    if (this.volume == 0) { return };
+    if (this.volume === 0) { return };
     this.setup();
 
     this.ratios.forEach((ratio) => {
