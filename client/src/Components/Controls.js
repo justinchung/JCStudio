@@ -3,15 +3,24 @@ import Looper from './Looper.js';
 import Metronome from './Metronome.js';
 import BPMSlider from './TempoControl.js';
 
+import { Grid } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { 
+  PlayCircleFilled,
+  PauseCircleFilled,
+  AddCircle,
+  RemoveCircle,
+} from '@material-ui/icons';
+
 class Controls extends React.Component {
   state = {
-    context: this.props.context,                // Audio Context
+    context: this.props.context,
 
-    isPlaying: false,                           // Flag - line and metronome active
-    isRecording: false,                         // Flag - ine, metronome, and recording active
-    metronomeSound: true,                       // Flag - metronome produces sound
-    bpm: 120,                                   // Tempo
-    barCount: 1,                                // How many bars present
+    isPlaying: false,
+    isRecording: false,
+    metronomeSound: true,
+    bpm: 120,
+    barCount: 1,
 
     nextNoteTime: 0.0,
     noteLength: 0.05,
@@ -24,29 +33,26 @@ class Controls extends React.Component {
 	}
 
   render() {
+    const { classes } = this.props;
     const duration = (60 / this.state.bpm) * 16;
 		return (
-			<div className="controller">
-		    <div className="control_panel">
-          <div className="controls left">
-            <button className="control record" onClick={ this.toggleRecord }>Record</button>
-            <button className="control play" onClick={ this.togglePlay }>Play</button>
-          </div>
-          <div className="controls center">
-            <button className="control add_bar" onClick={ this.addBar }>+</button>
-            <button className="control remove_bar" onClick={ this.removeBar }>-</button>
-          </div>
-          <div className="controls right">
-            <Metronome toggleMetronome={ this.toggleMetronome } />
-            <BPMSlider onChange={ this.tempoOnChange }/>
-          </div>
-        </div>
-				<Looper context={ this.props.context} barCount={this.state.barCount} bpm={ this.state.bpm }
-				active={ this.state.isPlaying } animateDuration={ duration } isRecording={ this.state.isRecording}/>
-			</div>
+			<Grid container className={classes.controller}>
+        <Grid item xs={8} className={classes.left}>
+          { this.state.isPlaying ? <PauseCircleFilled className={classes.button} onClick={this.togglePlay}/> : <PlayCircleFilled className={classes.button} onClick={this.togglePlay}/> }
+          <AddCircle className={classes.button} onClick={this.addBar}/>
+          <RemoveCircle className={classes.button} onClick={this.removeBar}/>
+        </Grid>
+        <Grid item xs={4} className={classes.right}>
+          <Metronome toggleMetronome={ this.toggleMetronome } context={this.state.context} isPlaying={this.state.isPlaying}/>
+          <BPMSlider onChange={ this.tempoOnChange }/>
+        </Grid>
+        <Grid item xs={12}>
+    			<Looper context={ this.props.context} barCount={this.state.barCount} bpm={ this.state.bpm }
+    			active={ this.state.isPlaying } animateDuration={ duration } isRecording={ this.state.isRecording}/>
+        </Grid>
+			</Grid>
 		);
 	}
-
 
   // Callback used in setInterval, schedules notes using lookahead and overlap
   scheduler = () => {
@@ -84,7 +90,6 @@ class Controls extends React.Component {
     if (this.state.metronomeSound) {
       osc.start(time);
       osc.stop(time + this.state.noteLength);
-      //console.log('note');
     }
   }
 
@@ -126,35 +131,21 @@ class Controls extends React.Component {
     }));
   }
 
-  // Toggle recording, calls togglePlay
-  toggleRecord = () => {
-    this.setState((prevState) => ({
-      isRecording: !prevState.isRecording
-    }));
-    this.togglePlay();
-	}
-
-    // Toggle play, triggers CSS animation
+  // Toggle play, triggers CSS animation
 	togglePlay = () => {
-    this.setState((prevState) => ({
-      isPlaying: !prevState.isPlaying
-    }));
+    this.setState( { isPlaying: !this.state.isPlaying } );
     this.playMetronome();
 	}
 
   // Add a bar to the bottom
 	addBar = () => {
-    this.setState((prevState) => ({
-      barCount: prevState.barCount + 1
-    }));
+    this.setState( { barCount: ++this.state.barCount } );
 	}
 
   // Remove a bar from the bottom
 	removeBar = () => {
     if (this.state.barCount > 0) {
-      this.setState((prevState) => ({
-        barCount: prevState.barCount - 1
-      }));
+      this.setState({ barCount: --this.state.barCount }); 
     }
 	}
 
@@ -174,4 +165,21 @@ class Controls extends React.Component {
 	}
 }
 
-export default Controls;
+const styles = {
+  controller: {
+    padding: '12px 0px'
+  },
+  left: {
+    textAlign: 'left',
+    paddingLeft: 64
+  },
+  right: {
+    textAlign: 'right',
+    paddingRight: 64
+  },
+  button: {
+    fontSize: 32
+  }
+}
+
+export default withStyles(styles)(Controls);
