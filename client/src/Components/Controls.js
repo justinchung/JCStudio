@@ -81,10 +81,26 @@ class Controls extends React.Component {
       osc.frequency.value = 880;
     }
 
+<<<<<<< Updated upstream
     if (this.state.metronomeSound) {
       osc.start(time);
       osc.stop(time + this.state.noteLength);
       //console.log('note');
+=======
+    // Plays certain frequency given the value of quarter note
+    scheduleNote(beatNumber, time) {
+        var osc = this.state.context.createOscillator();
+        osc.connect(this.state.context.destination);
+        osc.frequency.value = 440;
+        if (beatNumber % 4 === 1) {
+            osc.frequency.value = 880;
+        }
+
+        if (this.state.metronomeSound) {
+            osc.start(time);
+            osc.stop(time + this.state.noteLength);
+        }
+>>>>>>> Stashed changes
     }
   }
 
