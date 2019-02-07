@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import AppNavbar from './AppNavbar.js';
-import KeyBoard from './KeyBoard.js';
-import Controls from './Controls.js';
+import AppNavbar from './AppNavbar';
+import KeyBoard from './KeyBoard';
+import Controls from './Controls';
+import Sequencer from './Sequencer';
 
 import '../Styles/App.css';
 import '../Styles/Keyboard.css';
@@ -20,6 +21,9 @@ class App extends Component {
   };
 
   render() {
+    return (
+      <Sequencer ctx={this.state.context} />
+    );
     return (
       <div className="App">
         <AppNavbar />

@@ -15,11 +15,11 @@ class Bar extends React.Component {
     );
   }
 
-  onClickBar() {
+  onClickBar = () => {
     this.props.selectBar(this.props.barId);
   }
 
-  renderHits() {
+  renderHits = () => {
     var hits = [];
     if (this.props.hits != null) {
       for (var i = 0; i < this.props.hits.length; i++) {

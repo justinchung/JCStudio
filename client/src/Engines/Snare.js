@@ -41,17 +41,8 @@ export class Snare {
       output[i] = Math.random() * 2 - 1;
     }
 
-<<<<<<< Updated upstream
     return buffer;
   }
-=======
-    trigger(time) {
-        if (this.volume === 0) { return };
-        this.setup();
-        this.noiseEnvelope.gain.setValueAtTime(this.volume, time);
-        this.noiseEnvelope.gain.exponentialRampToValueAtTime(0.01, time + this.decay);
-        this.noise.start(time);
->>>>>>> Stashed changes
 
   trigger(time) {
     if (this.volume === 0) { return };
